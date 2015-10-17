@@ -18,23 +18,21 @@
 */
 package org.apache.cordova.media;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaResourceApi;
-
-import android.content.Context;
-import android.media.AudioManager;
-import android.net.Uri;
-import android.util.Log;
-
-import java.util.ArrayList;
-
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
+import android.content.Context;
+import android.media.AudioManager;
+import android.net.Uri;
+import android.util.Log;
 
 /**
  * This class called by CordovaActivity to play and record audio.

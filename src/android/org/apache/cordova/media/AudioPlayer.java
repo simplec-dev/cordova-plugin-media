@@ -18,6 +18,13 @@
 */
 package org.apache.cordova.media;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -26,13 +33,6 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.util.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 /**
  * This class implements the audio playback and recording capabilities used by Cordova.
