@@ -127,15 +127,15 @@ Media.prototype.getCurrentPosition = function(success, fail) {
 /**
  * Start recording audio file.
  */
-Media.prototype.startRecord = function() {
-    exec(null, this.errorCallback, "Media", "startRecordingAudio", [this.id, this.src]);
+Media.prototype.startRecord = function(success) {
+    exec(success, this.errorCallback, "Media", "startRecordingAudio", [this.id, this.src]);
 };
 
 /**
  * Stop recording audio file.
  */
-Media.prototype.stopRecord = function() {
-    exec(null, this.errorCallback, "Media", "stopRecordingAudio", [this.id]);
+Media.prototype.stopRecord = function(success) {
+    exec(success, this.errorCallback, "Media", "stopRecordingAudio", [this.id]);
 };
 
 /**

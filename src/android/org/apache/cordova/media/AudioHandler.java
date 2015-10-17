@@ -76,12 +76,19 @@ public class AudioHandler extends CordovaPlugin {
         if (action.equals("startRecordingAudio")) {
             String target = args.getString(1);
             String fileUriStr;
+
+            Log.i(TAG, "target: " + target);
             try {
                 Uri targetUri = resourceApi.remapUri(Uri.parse(target));
                 fileUriStr = targetUri.toString();
             } catch (IllegalArgumentException e) {
                 fileUriStr = target;
+                Log.e(TAG, "error: " +  e.getMessage(), e);
             }
+
+            Log.i(TAG, "fileUriStr: " + fileUriStr);
+            
+            result = fileUriStr;
             this.startRecordingAudio(args.getString(0), FileHelper.stripFileProtocol(fileUriStr));
         }
         else if (action.equals("stopRecordingAudio")) {
