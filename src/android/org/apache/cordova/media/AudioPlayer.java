@@ -20,7 +20,9 @@ package org.apache.cordova.media;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -172,9 +174,6 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
      * @param file
      */
     public void moveFile(String file) {
-        /* this is a hack to save the file as the specified name */
-        File f = handler.cordova.getActivity().getFileStreamPath(this.tempFile);
-
         if (!file.startsWith("/")) {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 file = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + file;
@@ -182,11 +181,44 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
                 file = "/data/data/" + handler.cordova.getActivity().getPackageName() + "/cache/" + file;
             }
         }
-        File dest = handler.cordova.getActivity().getFileStreamPath(file);
+        
+        /* this is a hack to save the file as the specified name */
+       /* File f = new File(this.tempFile);
+
 
         String logMsg = "renaming " + this.tempFile + " to " + file;
         Log.d(LOG_TAG, logMsg);
-        if (!f.renameTo(dest)) Log.e(LOG_TAG, "FAILED " + logMsg);
+        if (!f.renameTo(new File(file))) Log.e(LOG_TAG, "FAILED " + logMsg);*/
+
+        FileInputStream inStream = null;
+        FileOutputStream outStream = null;
+        try {
+            inStream = new FileInputStream(this.tempFile);
+            outStream = new FileOutputStream(file);
+            FileChannel inChannel = inStream.getChannel();
+            FileChannel outChannel = outStream.getChannel();
+            inChannel.transferTo(0, inChannel.size(), outChannel);
+            
+            File f = new File(this.tempFile);
+            f.delete();
+        } catch (Exception e) {
+            Log.d(LOG_TAG, e.getMessage(), e);
+        } finally {
+        	if (inStream!=null) {
+                try {
+					inStream.close();
+				} catch (IOException e) {
+		            Log.d(LOG_TAG, e.getMessage(), e);
+				}
+        	}
+        	if (outStream!=null) {
+        		try {
+					outStream.close();
+				} catch (IOException e) {
+		            Log.d(LOG_TAG, e.getMessage(), e);
+				}
+        	}
+        }
     }
 
     /**
