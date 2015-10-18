@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.util.Log;
@@ -76,6 +77,11 @@ public class AudioHandler extends CordovaPlugin {
         if (action.equals("startRecordingAudio")) {
             String target = args.getString(1);
             String fileUriStr;
+            String filesDir = cordova.getActivity().getFilesDir().getAbsolutePath();
+            
+            if (target.indexOf('/')<0) {
+            	target = filesDir + target;
+            }
 
             Log.i(TAG, "target: " + target);
             try {
@@ -89,7 +95,7 @@ public class AudioHandler extends CordovaPlugin {
             Log.i(TAG, "fileUriStr: " + fileUriStr);
             
             result = fileUriStr;
-            this.startRecordingAudio(args.getString(0), FileHelper.stripFileProtocol(fileUriStr));
+            this.startRecordingAudio(args.getString(0), fileUriStr);//FileHelper.stripFileProtocol(fileUriStr));
         }
         else if (action.equals("stopRecordingAudio")) {
             this.stopRecordingAudio(args.getString(0));
