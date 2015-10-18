@@ -148,10 +148,13 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
                 this.recorder.prepare();
                 this.recorder.start();
                 this.setState(STATE.MEDIA_RUNNING);
+                Log.e(LOG_TAG, "AudioPlayer appears to be recording");
                 return;
             } catch (IllegalStateException e) {
+                Log.e(LOG_TAG, "AudioPlayer Error: "+e.getMessage(), e);
                 e.printStackTrace();
             } catch (IOException e) {
+                Log.e(LOG_TAG, "AudioPlayer Error: "+e.getMessage(), e);
                 e.printStackTrace();
             }
 

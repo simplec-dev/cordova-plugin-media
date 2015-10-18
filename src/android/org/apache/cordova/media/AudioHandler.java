@@ -105,7 +105,7 @@ public class AudioHandler extends CordovaPlugin {
             String fileUriStr = resolveTarget(target);
             
             result = fileUriStr;
-            this.startRecordingAudio(args.getString(0), fileUriStr);//FileHelper.stripFileProtocol(fileUriStr));
+            this.startRecordingAudio(args.getString(0), FileHelper.stripFileProtocol(fileUriStr));
         }
         else if (action.equals("stopRecordingAudio")) {
             this.stopRecordingAudio(args.getString(0));
