@@ -94,6 +94,10 @@ public class AudioHandler extends CordovaPlugin {
 
             Log.i(TAG, "fileUriStr: " + fileUriStr);
             
+            if (!fileUriStr.startsWith("file://")) {
+            	fileUriStr = "file://" + fileUriStr;
+            }
+            
             result = fileUriStr;
             this.startRecordingAudio(args.getString(0), fileUriStr);//FileHelper.stripFileProtocol(fileUriStr));
         }
