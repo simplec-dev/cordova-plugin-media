@@ -181,6 +181,7 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
                 file = "/data/data/" + handler.cordova.getActivity().getPackageName() + "/cache/" + file;
             }
         }
+        Log.d(LOG_TAG, "renaming " + this.tempFile + " to " + file);
         
         /* this is a hack to save the file as the specified name */
        /* File f = new File(this.tempFile);
@@ -198,9 +199,11 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
             FileChannel inChannel = inStream.getChannel();
             FileChannel outChannel = outStream.getChannel();
             inChannel.transferTo(0, inChannel.size(), outChannel);
+            Log.d(LOG_TAG, "COPIED THE FILE");
             
             File f = new File(this.tempFile);
             f.delete();
+            Log.d(LOG_TAG, "DELETED THE TEMP FILE");
         } catch (Exception e) {
             Log.d(LOG_TAG, e.getMessage(), e);
         } finally {
@@ -254,6 +257,7 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
             this.player.start();
             this.setState(STATE.MEDIA_RUNNING);
             this.seekOnPrepared = 0; //insures this is always reset
+            Log.d(LOG_TAG, "PLAYING " + file);
         } else {
             this.prepareOnly = false;
         }
