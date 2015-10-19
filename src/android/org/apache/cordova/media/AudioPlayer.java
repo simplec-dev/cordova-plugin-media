@@ -233,9 +233,9 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
                 if (this.state == STATE.MEDIA_RUNNING) {
                     this.recorder.stop();
                     this.setState(STATE.MEDIA_STOPPED);
+                    this.moveFile(this.audioFile);
                 }
                 this.recorder.reset();
-                this.moveFile(this.audioFile);
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -253,12 +253,15 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
      * @param file              The name of the audio file.
      */
     public void startPlaying(String file) {
+        Log.i(LOG_TAG, "startPlaying " + file);
         if (this.readyPlayer(file) && this.player != null) {
+            Log.i(LOG_TAG, "startPlaying 2");
             this.player.start();
             this.setState(STATE.MEDIA_RUNNING);
             this.seekOnPrepared = 0; //insures this is always reset
-            Log.d(LOG_TAG, "PLAYING " + file);
+            Log.i(LOG_TAG, "PLAYING 3");
         } else {
+            Log.i(LOG_TAG, "startPlaying 4");
             this.prepareOnly = false;
         }
     }
