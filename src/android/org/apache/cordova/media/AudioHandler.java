@@ -110,7 +110,7 @@ public class AudioHandler extends CordovaPlugin {
             this.startRecordingAudio(args.getString(0), FileHelper.stripFileProtocol(fileUriStr));
         }
         else if (action.equals("stopRecordingAudio")) {
-            this.stopRecordingAudio(args.getString(0));
+            result = this.stopRecordingAudio(args.getString(0));
         }
         else if (action.equals("startPlayingAudio")) {
             String target = args.getString(1);
@@ -267,11 +267,13 @@ public class AudioHandler extends CordovaPlugin {
      * Stop recording and save to the file specified when recording started.
      * @param id				The id of the audio player
      */
-    public void stopRecordingAudio(String id) {
+    public String stopRecordingAudio(String id) {
         AudioPlayer audio = this.players.get(id);
         if (audio != null) {
             audio.stopRecording();
+            return audio.getAudioFile();
         }
+        return null;
     }
 
     /**

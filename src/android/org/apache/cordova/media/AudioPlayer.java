@@ -109,7 +109,11 @@ public class AudioPlayer implements OnCompletionListener, OnPreparedListener, On
 
     }
 
-    /**
+    public String getAudioFile() {
+		return audioFile;
+	}
+
+	/**
      * Destroy player and stop audio playing or recording.
      */
     public void destroy() {
