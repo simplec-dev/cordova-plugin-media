@@ -66,6 +66,9 @@ public class AudioHandler extends CordovaPlugin {
         CordovaResourceApi resourceApi = webView.getResourceApi();
         String fileUriStr;
         String filesDir = cordova.getActivity().getFilesDir().getAbsolutePath();
+        if (!filesDir.endsWith("/")) {
+        	filesDir += "/";
+        }
         
         if (target.indexOf('/')<0) {
         	target = filesDir + target;
@@ -96,7 +99,6 @@ public class AudioHandler extends CordovaPlugin {
      * @return 				A PluginResult object with a status and message.
      */
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        CordovaResourceApi resourceApi = webView.getResourceApi();
         PluginResult.Status status = PluginResult.Status.OK;
         String result = "";
 
